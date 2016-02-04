@@ -1,0 +1,60 @@
+getmap.c:	xmin = perso->x / screen->width_tile;
+getmap.c:	ymin = perso->y / screen->height_tile;
+getmap.c:	xmax = (perso->x + perso->w -1) / screen->width_tile;
+getmap.c:	ymax = (perso->y + perso->h -1) / screen->height_tile;
+getmap.c:	if (xmin<0 || ymin<0 || xmax>=screen->nbtiles_largeur_monde || ymax>=screen->nbtiles_hauteur_monde)
+getmap.c:			indicetile = screen->schema[i][j];
+getmap.c:			if (screen->props[indicetile].mur)
+getmap.c:  xmin = perso->x / screen->width_tile;
+getmap.c:  ymin = perso->y / screen->height_tile;
+getmap.c:  xmax = (perso->x + perso->w -1) / screen->width_tile;
+getmap.c:  ymax = (perso->y + perso->h -1) / screen->height_tile;
+getmap.c:    indicetile = screen->schema[i][j];
+getmap.c:	xmin = perso->x / screen->width_tile;
+getmap.c:	ymin = perso->y / screen->height_tile;
+getmap.c:	xmax = (perso->x + perso->w -1) / screen->width_tile;
+getmap.c:	ymax = (perso->y + perso->h -1) / screen->height_tile;
+getmap.c:			indicetile = screen->schema[i][j];
+getmap.c:			if (screen->props[indicetile].end)
+getmap.c:			if (screen->props[indicetile].next)
+getmap.c:			if (screen->props[indicetile].ladder)
+getmap.c:	screen->xscroll = perso->x + perso->w/2 - screen->largeur_fenetre/2;
+getmap.c:	screen->yscroll = perso->y + perso->h/2 - screen->hauteur_fenetre/2;
+getmap.c:	xlimmin = screen->xscroll + limit->x;
+getmap.c:	ylimmin = screen->yscroll + limit->y;
+getmap.c:		screen->xscroll -= (xlimmin-cxperso);
+getmap.c:		screen->yscroll -= (ylimmin-cyperso);
+getmap.c:		screen->xscroll += (cxperso-xlimmax);
+getmap.c:		screen->yscroll += (cyperso-ylimmax);
+getmap.c~:	xmin = perso->x / screen->width_tile;
+getmap.c~:	ymin = perso->y / screen->height_tile;
+getmap.c~:	xmax = (perso->x + perso->w -1) / screen->width_tile;
+getmap.c~:	ymax = (perso->y + perso->h -1) / screen->height_tile;
+getmap.c~:	if (xmin<0 || ymin<0 || xmax>=screen->nbtiles_largeur_monde || ymax>=screen->nbtiles_hauteur_monde)
+getmap.c~:			indicetile = screen->schema[i][j];
+getmap.c~:			if (screen->props[indicetile].mur)
+getmap.c~:	xmin = perso->x / screen->width_tile;
+getmap.c~:	ymin = perso->y / screen->height_tile;
+getmap.c~:	xmax = (perso->x + perso->w -1) / screen->width_tile;
+getmap.c~:	ymax = (perso->y + perso->h -1) / screen->height_tile;
+getmap.c~:			indicetile = screen->schema[i][j];
+getmap.c~:			if (screen->props[indicetile].end)
+getmap.c~:			if (screen->props[indicetile].next)
+getmap.c~:			if (screen->props[indicetile].ladder)
+getmap.c~:	screen->xscroll = perso->x + perso->w/2 - screen->largeur_fenetre/2;
+getmap.c~:	screen->yscroll = perso->y + perso->h/2 - screen->hauteur_fenetre/2;
+getmap.c~:	xlimmin = screen->xscroll + limit->x;
+getmap.c~:	ylimmin = screen->yscroll + limit->y;
+getmap.c~:		screen->xscroll -= (xlimmin-cxperso);
+getmap.c~:		screen->yscroll -= (ylimmin-cyperso);
+getmap.c~:		screen->xscroll += (cxperso-xlimmax);
+getmap.c~:		screen->yscroll += (cyperso-ylimmax);
+main.c:  rects->color =  SDL_MapRGB(rects->screen->format,255,0,255);
+menu.c:  ButtNewGame->color = SDL_MapRGB(ButtNewGame->screen->format,DEF_R,DEF_G,DEF_B);
+menu.c:  ButtLoadGame->color = SDL_MapRGB(ButtLoadGame->screen->format,DEF_R,DEF_G,DEF_B);
+menu.c:  ButtSettings->color = SDL_MapRGB(ButtSettings->screen->format,DEF_R,DEF_G,DEF_B);
+menu.c:  ButtCredit->color = SDL_MapRGB(ButtCredit->screen->format,DEF_R,DEF_G,DEF_B);
+menu.c:  ButtQuit->color = SDL_MapRGB(ButtQuit->screen->format,DEF_R,DEF_G,DEF_B);
+menu.c:		menu_rects->color = SDL_MapRGB(menu_rects->screen->format,DEF_R,DEF_G,DEF_B);
+menu.c:	menu_rects->color = SDL_MapRGB(menu_rects->screen->format,200,0,0);
+menu.c:	 	menu_rects->color = SDL_MapRGB(menu_rects->screen->format,DEF_R,DEF_G,DEF_B);

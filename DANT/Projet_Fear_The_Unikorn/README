@@ -1,0 +1,27 @@
+# Requirement & Compilation of the game:
+
+# 1) Installer les bibliotheques:
+
+# -SDL:
+
+apt-get install libsdl1.2-dev libsdl1.2debian
+
+# -SDL_ttf: 
+
+apt-get install libsdl-ttf2.0-dev
+
+# 2) Extraire le .tar
+
+Utiliser "tar -xvf Projet_Fear_The_Unikorn"
+
+# 3) Compiler le jeu:
+
+# CD to the games directory
+
+make re
+
+# 4) Lancer le jeu:
+
+./Nahal
+
+# 5) Trouver la sortie !
