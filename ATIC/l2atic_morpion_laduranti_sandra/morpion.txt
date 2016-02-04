@@ -1,0 +1,15 @@
+MORPION (rendu 14 Octobre)
+
+V1 : N*N fixe
+cas de base 5*5
+
+INIT
+
+	Types
+
+	Var: -matrice
+	     -Joueur1
+	     -Joueur2
+	     -nbr_coups
+	     -taille N
+	     

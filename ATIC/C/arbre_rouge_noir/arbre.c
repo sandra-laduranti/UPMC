@@ -1,0 +1,34 @@
+#include <stdlib.h>
+#include <stdio.h>
+
+int	hauteur_noire(arbreRN *arbre)
+{
+  int	hauteur;
+  abreRN *x;
+
+  x = arbre;
+  hauteur = 0;
+  while(x != NULL)
+    {
+      if (x->couleur == NOIR)
+	hauteur ++;
+      x = x->gauche;
+      retourner (hauteur);
+    }
+}
+
+int estArbreRn(arbreRN *arbre)
+{
+  if(arbre->color == rouge)
+    return 0;
+  return estArbreRn_rec(arbre,1,hauteurNoire(arbre));
+}
+
+int	estAbreRn_rec(arbreRN *arbre, int noirs, int hauteur)
+{
+  if (estFeuille(arbre))
+    return (noirs==hauteur);
+  if (arbre->color == noir)
+    noirs++;
+  return estArbreRN_rec(arbre
+}

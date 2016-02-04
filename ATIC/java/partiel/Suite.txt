@@ -1,0 +1,5 @@
+isEmpty ==> true si liste vide
+getFirst ==> retourne le premier element de la suite
+getReste ==> retourne la suite privée de sons premier elem
+append ==> construit une nouvelle suite avec un objet en plus à la fin
+
