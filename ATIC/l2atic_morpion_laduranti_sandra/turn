@@ -1,0 +1,57 @@
+begin.c:    if (gaming->computer != OK)
+begin.c:	gaming->tab[i] = 0;
+begin.c:	  if (gaming->computer == OK){
+begin.c:	    if (gaming->turn % 2){
+begin.c:	      printf("player va jouer\n, tour = %d tourn modulo 2 = %d\n",gaming->turn,gaming->turn % 2);
+begin.c:  gaming->computer = NOK;
+begin.c~:	gaming->tab[i] = 0;
+begin.c~:	  if (gaming->computer == OK){
+begin.c~:	    if (gaming->turn % 2){
+begin.c~:  gaming->computer = NOK;
+complete_grid.c:  player = (((gaming->players) + (gaming->turn))%(gaming->players));
+complete_grid.c:  printf("modulo = %d gaming: players %d turn %d\n", player, gaming->players, gaming->turn);
+complete_grid.c:  gaming->turn++;
+complete_grid.c~:  player = ((gaming->players) - (gaming->turn)%(gaming->players));
+complete_grid.c~:  printf("modulo = %d gaming: players %d turn %d\n", player, gaming->players, gaming->turn);
+complete_grid.c~:  gaming->turn++;
+complete_grid.c~:  printf("tour: %d\n", gaming->turn);
+end_of_game.c:  k = gaming->tab[1];
+end_of_game.c:  while (i <= gaming->players)
+end_of_game.c:      printf("i %d gaming->tab[i] %d\n",i,gaming->tab[i]);
+end_of_game.c:  while (i <= gaming->players){
+end_of_game.c:      printf("win %d points\n", gaming->tab[i]);
+end_of_game.c:    if (gaming->tab[i] > k){
+end_of_game.c:      k = gaming->tab[i];
+end_of_game.c:  while (k <= gaming->players){
+end_of_game.c:    printf("k = %d j = %d tab[k] = %d tab[j] = %d\n",k,j,gaming->tab[k],gaming->tab[j]);
+end_of_game.c:    if(gaming->tab[k] == gaming->tab[j] && k != j){
+end_of_game.c:  if (gaming->tab[j] == 0)
+end_of_game.c:  if (gaming->turn == (grid_size*grid_size)+1)
+ia.c:	//grid[randx][randy] = (gaming->turn % 2);
+ia.c:  printf("grid_rand gaming turn= %d\n", gaming->turn %2);
+ia.c:  //printf("viens de jouer\n, tourn modulo 2 = %d\n", gaming->turn % 2);
+ia.c:  // gaming->turn++;
+ia.c~:	grid[randx][randy] = (gaming->turn % 2);
+ia.c~:  gaming->turn++;
+Binary file morpion matches
+options.c:      gaming->players = i;
+options.c:      gaming->util_line = i;
+options.c:      gaming->computer = OK;
+options.c:  if (gaming->players == 0)
+options.c:    gaming->players = 2;
+options.c:  if (gaming->players > 5)
+options.c:    gaming->players = 5;
+options.c:  if (gaming->util_line == 0)
+options.c:    gaming->util_line = 1;
+options.c:  if (gaming->computer == OK)
+options.c:    gaming->players = 2;
+options.c:  gaming->turn = 1;
+winner.c:  // player = ((gaming->players) - (gaming->turn)%(gaming->players));
+winner.c:    gaming->tab[player]++;
+winner.c:    gaming->tab[player]++;
+winner.c:    gaming->tab[player]++;
+winner.c:    gaming->tab[player]++;
+winner.c~:    gaming->tab[player]++;
+winner.c~:    gaming->tab[player]++;
+winner.c~:    gaming->tab[player]++;
+winner.c~:    gaming->tab[player]++;

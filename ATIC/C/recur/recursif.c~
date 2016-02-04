@@ -1,0 +1,18 @@
+#include  <stdlib.h>
+#include <stdio.h>
+
+int	factorielle(int num, int fact)
+{
+  int	val;
+
+  printf("factorielle: num= %d\n",num);
+  if (fact == 1)
+    return (num);
+  return (factorielle(num*(--fact));
+}
+
+int	main()
+{
+  printf("resultat final: %d\n", factorielle(1,5));
+  return EXIT_SUCCESS;
+}
