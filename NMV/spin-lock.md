@@ -1,3 +1,5 @@
+note: lecture via atom markdown enhanced pour TOC et mermaid
+
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 <!-- code_chunk_output -->
 
@@ -23,7 +25,7 @@
 
 <!-- /code_chunk_output -->
 
-#SPIN LOCK and Contention
+# SPIN LOCK and Contention
 solution ->
 - On essaye encore
   - "spin" ou "busy-wait" (on test en boucle le lock)
@@ -34,7 +36,7 @@ solution ->
   - bon si delay long
   - toujours bon pour un uniprocesseur
 
-##Basic Spin-Lock
+## Basic Spin-Lock
 
 ```mermaid
  graph LR
@@ -60,7 +62,7 @@ Un set de threads se bat pour le lock. Le cyan l'obtient et les autres tournent 
 **Problème** => la contention (trop de threads veulent le lock)
 
 
-###Test and Set <a name="TestandSet"></a>
+### Test and Set <a name="TestandSet"></a>
 - TAS enregistre de manière atomique **true** dans un mot
 - return la précédente value du mot et swap la value à **true** pour le mot courant.
 - On peut reset le mot en ecrivant **false** dessus.
@@ -88,7 +90,7 @@ AtomicBoolean lock = new AtomicBoolean(false);
 boolean prior = lock.getAndSet(true);
 ```
 
-####Test and Set Locks
+#### Test and Set Locks
 - Locking
   - lock libre -> value == false
   - lock pris -> value == true
