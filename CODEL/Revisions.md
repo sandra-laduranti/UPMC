@@ -43,7 +43,7 @@ Map : (K1,V1) → list(K2,V2)
 - **sort**
   - tri des différentes clés déffinissant l'ordre de lecture par le reduce : ⇒ un ordre doit être défini pour chaque type de clé
 
-![MapReduce](/UPMC/tree/M2/CODEL/ressourcesMarkdown/mapReduce1.JPG)
+![MapReduce](./ressourcesMarkdown/mapReduce1.JPG)
 
 ### Reduce
   - Lit les données des maps via le shuffle sous la forme <clé,valeur>
@@ -133,8 +133,8 @@ NameNode**
     - ...
 - Informe régulièrement le Namenode des blocs contenus localement
 
-![hdfsLectureFichier](/UPMC/tree/M2/CODEL/ressourcesMarkdown/hdfsLectureFichier.JPG)
-![hdfsEcritureFichier](/UPMC/tree/M2/CODEL/ressourcesMarkdown/hdfsEcritureFichier.JPG)
+![hdfsLectureFichier](./ressourcesMarkdown/hdfsLectureFichier.JPG)
+![hdfsEcritureFichier](./ressourcesMarkdown/hdfsEcritureFichier.JPG)
 
 ## YARN
 Service de gestion de ressources de calcul distribuées
