@@ -12,7 +12,7 @@
 ==> Le programmeur doit au **minimum fournir les fonctions map et reduce** pour que son programme fonctionne
 
 
-###Map
+### Map
   - lit des données d'entrées sous forme <clé,valeur>
   - Fait un traitement (exemple: extraire une info précise)
   - Produit des données de sorties sous forme <clé,valeur>
@@ -43,7 +43,7 @@ Map : (K1,V1) → list(K2,V2)
 - **sort**
   - tri des différentes clés déffinissant l'ordre de lecture par le reduce : ⇒ un ordre doit être défini pour chaque type de clé
 
-![MapReduce](/ressourcesMarkdown/mapReduce1.JPG)
+![MapReduce](/UPMC/tree/M2/CODEL/ressourcesMarkdown/mapReduce1.JPG)
 
 ### Reduce
   - Lit les données des maps via le shuffle sous la forme <clé,valeur>
@@ -60,7 +60,7 @@ Reduce : (K2, list(V2)) → list(K3, V3)
 Remarque : bien souvent K2 = K3
 ```
 
-![WordCount](/ressourcesMarkdown/mapReduceWordCount.JPG)
+![WordCount](/UPMC/tree/M2/CODEL/ressourcesMarkdown/mapReduceWordCount.JPG)
 Wordcount exemple:
 ``` C
 void Map(integer key, string value) {
@@ -133,8 +133,8 @@ NameNode**
     - ...
 - Informe régulièrement le Namenode des blocs contenus localement
 
-![hdfsLectureFichier](/ressourcesMarkdown/hdfsLectureFichier.JPG)
-![hdfsEcritureFichier](/ressourcesMarkdown/hdfsEcritureFichier.JPG)
+![hdfsLectureFichier](/UPMC/tree/M2/CODEL/ressourcesMarkdown/hdfsLectureFichier.JPG)
+![hdfsEcritureFichier](/UPMC/tree/M2/CODEL/ressourcesMarkdown/hdfsEcritureFichier.JPG)
 
 ## YARN
 Service de gestion de ressources de calcul distribuées
