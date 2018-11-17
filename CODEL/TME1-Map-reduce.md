@@ -1,8 +1,9 @@
-# TD CODEL 20172018
+# TD CODEL 2017-2018
 Exercices de Map-Reduce
+
 (par Jonathan Lejeune)
 
-la fonction map
+  - la fonction map
 ````Java
 Map(<TypeCléMap> key, <TypeValeurMap> value){
 //ici votre pseudo code map
@@ -29,9 +30,9 @@ entier compare(<TypeCléReduce> key1, <TypeCléReduce> key2){
 }
 ````
 
+## Exercice 1 - StereoPrix
 
-
-## StereoPrix est une entreprise de grande distribution et souhaite faire des statistiques sur
+StereoPrix est une entreprise de grande distribution et souhaite faire des statistiques sur
 les ventes. Elle possède une base de données stockée sur un système HDFS. Ces données
 sont stockées dans des fichiers textes. Chaque ligne d'un fichier correspond à la vente
 d'un produit et on peut y trouver des informations comme :
@@ -40,7 +41,7 @@ d'un produit et on peut y trouver des informations comme :
   - le prix de vente
   - la dénomination du produit
   - la catégorie du produit (ex : fruits et légumes, électroménager, jouet, ....)
-  - 12:15:00-15/12/18 totomagasin 5€ pile electromenager
+_12:15:00-15/12/18 totomagasin 5€ pile electromenager_
 
 ### Question 1
 Écrivez un programme map-reduce permettant de calculer Le chiffre d'affaire de
@@ -227,13 +228,13 @@ IdReduce getPartition(<mois,tancheHoraire> key, list of string, entier nbReduce)
 ````
 
 ## Exercice 3 - Un cas réel d'utilisation : Last.fm
-Last.fm est un site web de radio en ligne et de musique communautaire orant diérents
+Last.fm est un site web de radio en ligne et de musique communautaire offrant différents
 services à ses utilisateurs comme par exemple l'écoute ou le téléchargement gratuit
 de musiques. Il existe plus de 25 millions d'utilisateurs qui utilisent Last.fm tous les mois
 générant ainsi beaucoup de données à traiter. L'analyse de données la plus courante se
 fait sur les informations que les utilisateurs transmettent au site lorsqu'ils écoutent une
 musique. Grâce à ces informations, il possible de produire entre autres des hit-parades.
-Un titre peut être écouté de deux manières diérentes par un utilisateur :
+Un titre peut être écouté de deux manières différentes par un utilisateur :
 - soit en local sur son propre ordinateur et les informations d'écoute sont envoyées
 directement au serveur de Last.fm
 - soit via une web radio sur le site même. Dans ce cas, l'utilisateur a la possibilité
@@ -242,6 +243,8 @@ Le système logue pour chaque utilisateur et pour chaque titre le nombre de fois
 l'utilisateur a écouté le titre en local, le nombre de fois où l'utilisateur a écouté le titre
 en ligne et le nombre de fois où l'utilisateur l'a passé sans l'écouter. Le tableau ci-dessous
 en donne un exemple.
+
+
 UserId  | TrackId  | LocalListening  | RadioListening | Skip
 --|---|---|---|--
 111115  | 222 | 0  | 1  | 0
@@ -249,6 +252,8 @@ UserId  | TrackId  | LocalListening  | RadioListening | Skip
 111117  | 223 | 0  | 1  | 1
 111115  | 225 | 2  | 0  | 0
 111120  | 221 | 0  | 0  | 1
+
+
 L'objectif de cet exercice est de calculer pour chaque titre :
   1. le nombre de personnes qui l'ont écouté au moins une fois (en local ou en radio)
   2. le nombre de fois où il a été écouté et passé sans écoute.
@@ -330,5 +335,3 @@ TrackId | #listener | #listening  | #skips
 222  | 1 | 1 | 0
 223  | 1 | 1 | 1
 225  | 2 | 5 | 0
-
-````
