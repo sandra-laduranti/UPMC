@@ -60,7 +60,7 @@ Reduce : (K2, list(V2)) → list(K3, V3)
 Remarque : bien souvent K2 = K3
 ```
 
-![WordCount](/UPMC/tree/M2/CODEL/ressourcesMarkdown/mapReduceWordCount.JPG)
+![WordCount](./mapReduceWordCount.JPG)
 Wordcount exemple:
 ``` C
 void Map(integer key, string value) {
