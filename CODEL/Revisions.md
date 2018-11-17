@@ -43,7 +43,7 @@ Map : (K1,V1) → list(K2,V2)
 - **sort**
   - tri des différentes clés déffinissant l'ordre de lecture par le reduce : ⇒ un ordre doit être défini pour chaque type de clé
 
-![MapReduce](ressourcesMarkdown\mapReduce1.JPG)
+![MapReduce](/ressourcesMarkdown/mapReduce1.JPG)
 
 ### Reduce
   - Lit les données des maps via le shuffle sous la forme <clé,valeur>
@@ -60,7 +60,7 @@ Reduce : (K2, list(V2)) → list(K3, V3)
 Remarque : bien souvent K2 = K3
 ```
 
-![WordCount](ressourcesMarkdown\mapReduceWordCount.JPG)
+![WordCount](/ressourcesMarkdown/mapReduceWordCount.JPG)
 Wordcount exemple:
 ``` C
 void Map(integer key, string value) {
@@ -133,8 +133,8 @@ NameNode**
     - ...
 - Informe régulièrement le Namenode des blocs contenus localement
 
-![hdfsLectureFichier](ressourcesMarkdown\hdfsLectureFichier.JPG)
-![hdfsEcritureFichier](ressourcesMarkdown\hdfsEcritureFichier.JPG)
+![hdfsLectureFichier](/ressourcesMarkdown/hdfsLectureFichier.JPG)
+![hdfsEcritureFichier](/ressourcesMarkdown/hdfsEcritureFichier.JPG)
 
 ## YARN
 Service de gestion de ressources de calcul distribuées
@@ -163,7 +163,7 @@ manière aléatoire
 
 Points forts RDD sur DSM:
 - RDD ⇒ immutabilité :
-  - ⇒ on ne peut que créer, pas modier
+  - ⇒ on ne peut que créer, pas modifier
   - ⇒ réplication de tâches et de données facilitées
 - RDD ⇒ Écriture macros
   - ⇒Adapté pour l'écriture en bloc très utiles en Big Data
