@@ -1,40 +1,40 @@
-###4 V du Big Data
-- Volume (traiter et stocker une grande masse de données)
-- Vélocité (vitesse très élevée de génération de données)
-- Variété (données structurées/non structurées sur des formats variés)
-- Véracité (assurer l'intégrité des données => obsolescence, justesse)
+### 4 V du Big Data
+  - Volume (traiter et stocker une grande masse de données)
+  - Vélocité (vitesse très élevée de génération de données)
+  - Variété (données structurées/non structurées sur des formats variés)
+  - Véracité (assurer l'intégrité des données => obsolescence, justesse)
 
-#MapReduce
+# MapReduce
 
-- transparent pour le programmeur
-- équilibrage de charge/ stockage et transfert de données
+  - transparent pour le programmeur
+  - équilibrage de charge/ stockage et transfert de données
 
 ==> Le programmeur doit au **minimum fournir les fonctions map et reduce** pour que son programme fonctionne
 
 
 ###Map
-- lit des données d'entrées sous forme <clé,valeur>
-- Fait un traitement (exemple: extraire une info précise)
-- Produit des données de sorties sous forme <clé,valeur>
+  - lit des données d'entrées sous forme <clé,valeur>
+  - Fait un traitement (exemple: extraire une info précise)
+  - Produit des données de sorties sous forme <clé,valeur>
 ------------------------------------------------------------
-- chaque tâche map traite sa partie des données d'entrée appelé (**split**)
-- Chaque élément du split est associé à une clé de type K1
-- A chaque clé de type K1 lue depuis le split, la tâche map correspondante fait un appel à la fonction map().
-- La fonction map() produit dans le flux d'information une liste de <clé,valeur> intermédiaire de type <K2,V2>
-- **nombre de tâches de map = nombre de splits**
+  - chaque tâche map traite sa partie des données d'entrée appelé (**split**)
+  - Chaque élément du split est associé à une clé de type K1
+  - A chaque clé de type K1 lue depuis le split, la tâche map correspondante fait un appel à la fonction map().
+  - La fonction map() produit dans le flux d'information une liste de <clé,valeur> intermédiaire de type <K2,V2>
+  - **nombre de tâches de map = nombre de splits**
 ```
 Map : (K1,V1) → list(K2,V2)
 ```
 
 
-###Shuffle (phase intermédiaire)
-- Transfer, tri et fusionne les données entre les maps et les reduces
+### Shuffle (phase intermédiaire)
+  - Transfer, tri et fusionne les données entre les maps et les reduces
 -----------------------------------------------
-#####responsabilité des maps
-- stockage local partitionné des couples clé/valeur de sortie de map
-- **Partitionnement** : assignement déterministe des clés sur NbReduce partitions
-⇒ une valeur de clé est associée à un unique reduce
-#####responsabilité des reduces
+##### responsabilité des maps
+  - stockage local partitionné des couples clé/valeur de sortie de map
+  - **Partitionnement** : assignement déterministe des clés sur NbReduce partitions
+  ⇒ une valeur de clé est associée à un unique reduce
+##### responsabilité des reduces
 - **copy**
   - téléchargement sur chaque map de la partition qui lui est associée
 - **merge**
@@ -45,16 +45,16 @@ Map : (K1,V1) → list(K2,V2)
 
 ![MapReduce](D:\Documents\Sar\M2\CODEL\imgMD\mapReduce1.JPG)
 
-###Reduce
-- Lit les données des maps via le shuffle sous la forme <clé,valeur>
-- Fait un traitement (exemple: somme, groupement, filtre)
-- Produit les données de sortie du calcul sous la forme de <clé,valeur>
+### Reduce
+  - Lit les données des maps via le shuffle sous la forme <clé,valeur>
+  - Fait un traitement (exemple: somme, groupement, filtre)
+  - Produit les données de sortie du calcul sous la forme de <clé,valeur>
 --------------------------------------------
-- map terminée => agrégation en liste de toutes les valeurs intermédiaires de type V2 associées à une clé de type K2.
-- A chaque clé de type K2 la tache reduce correspondante fait un appel à la fonction reduce().
-- La fonction reduce() produit dans le flux d'info une liste de <clé,valeur> de type <K3,V3>
-- Chaque paire <K3,V3> émise est enregistrée dans l'ensemble de données de sortie
-- **Le nombre de tâche de reduces est défni a priori par l'utilisateur**
+  - map terminée => agrégation en liste de toutes les valeurs intermédiaires de type V2 associées à une clé de type K2.
+  - A chaque clé de type K2 la tache reduce correspondante fait un appel à la fonction reduce().
+  - La fonction reduce() produit dans le flux d'info une liste de <clé,valeur> de type <K3,V3>
+  - Chaque paire <K3,V3> émise est enregistrée dans l'ensemble de données de sortie
+  - **Le nombre de tâche de reduces est défni a priori par l'utilisateur**
 ```
 Reduce : (K2, list(V2)) → list(K3, V3)
 Remarque : bien souvent K2 = K3
@@ -81,7 +81,7 @@ Emit(key, count);
 }
 ```
 
-#Hadoop
+# Hadoop
 - **Hadoop Map Reduce**
   - Une application exécutant des programmes Map-Reduce sur YARN.
   - Une API pour coder des programmes Map-Reduce
@@ -90,7 +90,7 @@ Emit(key, count);
 - **Hadoop Distributed File System**
   - Système de fichiers distribué adapté aux gros volumes de données
 
-##HDFS
+## HDFS
 **Système de fichiers distribué, tolérant aux pannes et conçu pour
 stocker des fichiers massifs (> To).**
 
@@ -106,24 +106,25 @@ stocker des fichiers massifs (> To).**
     - ⇒ impossible d'avoir plusieurs écrivains, ou de modifier un endroit arbitraire du fichier
 -------------------------------------------------
 ###### archi maitre-esclave
-- la JVM maître HDFS : le **NameNode**
-- les JVM esclaves HDFS : les **DataNodes**
+  - la JVM maître HDFS : le **NameNode**
+  - les JVM esclaves HDFS : les **DataNodes**
 
-- Stockage physique des blocs sur les FS locaux des Datanodes
-- Chaque bloc est répliqué **3 fois par defaut**
-- Les réplicas sont localisés sur des DataNodes différents
+  - Stockage physique des blocs sur les FS locaux des Datanodes
+  - Chaque bloc est répliqué **3 fois par defaut**
+  - Les réplicas sont localisés sur des DataNodes différents
 
-###NameNode
-- Gère l'allocation, la distribution et la réplication des blocs
-- Interface du HDFS avec l'extérieur
-- **Le nb de fichiers du HDFS est limité par la capacité mémoire du
+### NameNode
+  - Gère l'allocation, la distribution et la réplication des blocs
+  - Interface du HDFS avec l'extérieur
+  - **Le nb de fichiers du HDFS est limité par la capacité mémoire du
 NameNode**
 
-###DataNode
-- Stocke des blocs de données dans le système de chier local
-- Serveur de bloc de données et de méta-données pour le client HDFS
-- Maintient des méta-données sur les blocs possédés (ex : CRC)
-######Communication avec le NameNode
+### DataNode
+  - Stocke des blocs de données dans le système de chier local
+  - Serveur de bloc de données et de méta-données pour le client HDFS
+  - Maintient des méta-données sur les blocs possédés (ex : CRC)
+
+######  Communication avec le NameNode
 - Heartbeat :
   - message-aller : capacité totale, espace utilisé/restant
   - message-retour : des commandes
@@ -135,28 +136,28 @@ NameNode**
 ![hdfsLectureFichier](D:\Documents\Sar\M2\CODEL\imgMD\hdfsLectureFichier.JPG)
 ![hdfsEcritureFichier](D:\Documents\Sar\M2\CODEL\imgMD\hdfsEcritureFichier.JPG)
 
-##YARN
+## YARN
 Service de gestion de ressources de calcul distribuées
-- architecture maître-esclaves
-- Gestion d'applications distribuées :
-  - ⇒ Allocation/placement de containers sur les n÷uds esclaves
-- Une container = une abstraction de ressources de calcul :
-  - ⇒ couple <nb processeurs, quantité mémoire>
+  - architecture maître-esclaves
+  - Gestion d'applications distribuées :
+    - ⇒ Allocation/placement de containers sur les n÷uds esclaves
+  - Une container = une abstraction de ressources de calcul :
+    - ⇒ couple <nb processeurs, quantité mémoire>
 
 ___________________________________
-#Spark
+# Spark
 
-####RDD (Resilient Distributed Dataset)
+#### RDD (Resilient Distributed Dataset)
 
 Un RDD est une collection de données :
-- typée
-- ordonnée (chaque élément a un index)
-- partitionnée sur un ensemble de machines
-- en lecture seule (immutabilité)
-- créée que par des opérations déterministes.
-- avec un niveau de persistance
+  - typée
+  - ordonnée (chaque élément a un index)
+  - partitionnée sur un ensemble de machines
+  - en lecture seule (immutabilité)
+  - créée que par des opérations déterministes.
+  - avec un niveau de persistance
 
-####RDD VS Distributed Shared Memory  
+#### RDD VS Distributed Shared Memory  
 DSM: Un espace d'adressage global, où les applications lisent et écrivent de
 manière aléatoire
 
