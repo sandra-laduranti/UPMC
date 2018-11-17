@@ -180,6 +180,63 @@ un tableau de Int en VectorInt
 	
 ![u \otimes v \rightarrow \begin{bmatrix} u_{1} \\u_{2} \\u_{3} \end{bmatrix} \otimes [v_{1}\ v_{2}\ v_{3}] = \begin{bmatrix} u_{1}v_{1} & u_{1}v_{2} & u_{1}v_{3} \\u_{2}v_{1} & u_{2}v_{2} & u_{2}v_{3} \\u_{3}v_{1} & u_{3}v_{2} & u_{3}v_{3} \end{bmatrix}]("https://www.codecogs.com/eqnedit.php?latex=u&space;\otimes&space;v&space;\rightarrow&space;\begin{bmatrix}&space;u_{1}&space;\\u_{2}&space;\\u_{3}&space;\end{bmatrix}&space;\otimes&space;[v_{1}\&space;v_{2}\&space;v_{3}]&space;=&space;\begin{bmatrix}&space;u_{1}v_{1}&space;&&space;u_{1}v_{2}&space;&&space;u_{1}v_{3}&space;\\u_{2}v_{1}&space;&&space;u_{2}v_{2}&space;&&space;u_{2}v_{3}&space;\\u_{3}v_{1}&space;&&space;u_{3}v_{2}&space;&&space;u_{3}v_{3}&space;\end{bmatrix}")
 
+````Scala
+class VectorInt(val t: Array[Int]) extends Serializable{
+    class IntVector(val origin : Array[Int]) { 
+      def vector = origin.toVector
+    }
+  
+    implicit def tabIntToVector(value : Array[Int]) = new IntVector(value)
+  
+  	def length: Int = t.vector.size
+  
+  	def get(i:Int): Int = t(i)
+  
+  	override def toString(): String ={
+      var str = new StringBuffer();
+      str.append("( ")
+      for ( i <- 0 to (t.length - 1)){
+        str.append(t(i)+" ")
+      }
+      str.append(")")
+      str.toString()
+    }
+  
+    override def equals( a: Any ): Boolean = a match {
+      case that : VectorInt if(that.t.vector.equals(this.t.vector) ) => true
+      case that : VectorInt  => false
+    }
+  
+  	def +(other: VectorInt): VectorInt = {
+      if (other.length != t.length) throw new Exception("+ size error")
+      var resVector : Array[Int] = Array.ofDim(t.length)
+      for (i <- 0 to (t.length - 1)){
+        resVector(i) = this.t(i) + other.t(i)
+      }
+      new VectorInt(resVector)
+    }
+  
+    def *(v:Int): VectorInt = {
+      var resVector : Array[Int] = Array.ofDim(t.length)
+        for (i <- 0 to (t.length - 1)){
+          resVector(i) = this.t(i) * v
+        }
+        new VectorInt(resVector)
+    }
+  
+    def prodDyadique(other: VectorInt): Array[VectorInt] = {
+        var resVector : Array[VectorInt] = Array.ofDim(t.length)
+        for( i <- 0 to (other.t.length -1)){
+          var tmp : Array[Int] = Array.ofDim(other.t.length)
+          for(j <- 0 to (t.length - 1)){
+            tmp(j) = (t(i)*other.t(j))
+          }
+          resVector(i) = new VectorInt(tmp);
+        }
+        return resVector
+    }
+}
+````
 
 ### Question 2
 
