@@ -1,4 +1,4 @@
-#Scala
+# Scala
 
 Tp par Jonathan Lejeune
 
@@ -20,6 +20,7 @@ Dans le même fichier créez une classe Catalogue. Cette classe permet d'associe
   - une redéfinition de la méthode toString qui produira grâce à un StringBuffer de Java une chaine de caractère affichant pour chaque produit de catalogue son prix unitaire en euros sur une ligne. Exemple
 
 _produit1 : 10 euros
+
 produit2 : 1.99 euros_
 
 ````Scala
@@ -68,8 +69,46 @@ case class NodeInt ( elem : Int , left : IntTree , right : IntTree ) extends Int
 Complétez les fonctions suivantes :
 ````Scala
 def contains( t : IntTree , v : Int ) : Boolean = t match 
-def size ( t : IntTree ) : I n t = t match
+def size ( t : IntTree ) : Int = t match
 def insert ( t : IntTree , v : Int ) : IntTree = t match 
+````
+
+````Scala
+def size(t:IntTree):Int=t match{
+  case EmptyIntTree=>0
+  case NodeInt(e,l,r)=>{
+    print("un noeud\n")
+    1+size(l)+size(r)
+  }
+}
+
+def contains(t:IntTree, v:Int):Boolean= t match{
+	case EmptyIntTree => false
+  case NodeInt(v,_,_)=>true
+  case NodeInt(e,l,_) if v<e=>contains(l,v)
+  case NodeInt(_,_,r)=>contains(r,v)
+}
+
+/!\Ne fonctionne pas
+def insert(t:IntTree, v:Int):IntTree = t match{
+  case EmptyIntTree =>{
+    print("case 1")
+    new NodeInt(v, EmptyIntTree, EmptyIntTree)
+  }
+  case NodeInt(v,EmptyIntTree,EmptyIntTree) =>{
+    print("case 2")
+    t
+  }
+  case NodeInt(e,l,r) if e<v => {
+    print("case 3")
+    NodeInt(e, l, insert(t,v))
+  }
+  case NodeInt(e,l,r) => {
+    print("case 4")
+    NodeInt(e, insert(t,v), r)
+  }
+}
+
 ````
 
 ### Question 3
