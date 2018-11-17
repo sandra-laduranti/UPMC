@@ -26,7 +26,7 @@ Ainsi il ne restera que les entiers qui ne sont multiples d'aucun entier, et qui
 
 ### Question 1
 Écrire la fonction premiers qui pour un entier n donné renvoie la liste des nombres premiers inférieurs ou égaux à n. L'idée de cette fonction est d'appliquer le crible
-d'Eratosthène en initialisant une liste d'entiers de 2 à n (utilisation de range) et d'appliquer successivement des ltres (méthode filter). Au ltre i il faudra enlever
+d'Eratosthène en initialisant une liste d'entiers de 2 à n (utilisation de range) et d'appliquer successivement des filtres (méthode filter). Au filtre i il faudra enlever
 de la liste les nombres qui sont divisible par i.
 
 ### Question 2
@@ -89,7 +89,7 @@ assert(!isSorted(ar2.reverse,descending))
 ### Question 1
 Donnez le code des fonction suivantes :
 `curryfie[A,B,C](f: (A, B) =>C): A =>B =>C = .....` qui renvoie une fonction quiest la version curryfiée de la fonction passée en paramètre
-`decurryfie[A,B,C](f: A =>B =>C):(A, B) =>C = .....` qui renvoie une fonction qui est la version non curryée de la fonction passée en paramètre
+`decurryfie[A,B,C](f: A =>B =>C):(A, B) =>C = .....` qui renvoie une fonction qui est la version non curryfiée de la fonction passée en paramètre
 et testez le code suivant :
 
 ````Scala
@@ -108,8 +108,8 @@ Donnez le code de la fonction suivante :
 `compose[A, B, C](f: B =>C, g: A =>B): A =>C = .....` qui renvoie une fonction qui fait la composition des deux fonctions passées en paramètre
 
 ### Question 3
-En utilisant exclusivement les fonctions dénies précédemment, donnez le code de la fonction suivante :
-`axplusb(a:Int,b:Int):Int=>Int = .....` qui renvoie une fonction `f` tel que `f(x) = ax + b`
+En utilisant exclusivement les fonctions définies précédemment, donnez le code de la fonction suivante :
+`axplusb(a:Int,b:Int):Int=>Int = .....` qui renvoie une fonction $f$ tel que $f(x) = ax + b$
 et testez le code suivant :
 
 ````Scala
