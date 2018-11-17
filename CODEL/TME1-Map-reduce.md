@@ -1,37 +1,48 @@
+# TD CODEL 20172018
+Exercices de Map-Reduce
+(par Jonathan Lejeune)
+
 la fonction map
+````Java
 Map(<TypeCléMap> key, <TypeValeurMap> value){
 //ici votre pseudo code map
 }
-- la fonction reduce
+````
+  - la fonction reduce
 Reduce(<TypeCléReduce> key, liste de <TypeValeurReduce> values){
 //ici votre pseudo code reduce
 }
-- la fonction de partitionnement
+````
+  - la fonction de partitionnement
+````Java
 IdReduce getPartition(<TypeCléReduce> key, <TypeValeurReduce> value,
 entier nbReduce){
 //retourne l'identifiant reduce de 0 à nbReduce-1 pour <key,value>
 }
-- la fonction de tri
+````
+  - la fonction de tri
+````Java
 entier compare(<TypeCléReduce> key1, <TypeCléReduce> key2){
 //retourne négatif si key1 < key2
 //retourne nul si key1 = key2
 //retourne positif si key1 > key2
 }
+````
 
 
 
-##StereoPrix est une entreprise de grande distribution et souhaite faire des statistiques sur
+## StereoPrix est une entreprise de grande distribution et souhaite faire des statistiques sur
 les ventes. Elle possède une base de données stockée sur un système HDFS. Ces données
-sont stockées dans des chiers textes. Chaque ligne d'un chier correspond à la vente
+sont stockées dans des fichiers textes. Chaque ligne d'un fichier correspond à la vente
 d'un produit et on peut y trouver des informations comme :
-- la date et l'heure de vente
-- le nom du magasin où le produit a été vendu
-- le prix de vente
-- la dénomination du produit
-- la catégorie du produit (ex : fruits et légumes, électroménager, jouet, ....)
-- 12:15:00-15/12/18 totomagasin 5€ pile electromenager
+  - la date et l'heure de vente
+  - le nom du magasin où le produit a été vendu
+  - le prix de vente
+  - la dénomination du produit
+  - la catégorie du produit (ex : fruits et légumes, électroménager, jouet, ....)
+  - 12:15:00-15/12/18 totomagasin 5€ pile electromenager
 
-###Question 1
+### Question 1
 Écrivez un programme map-reduce permettant de calculer Le chiffre d'affaire de
 l'entreprise c'est à dire la somme total des ventes des 5 dernières années (année en
 cours non comprise)
@@ -49,7 +60,7 @@ Map(Integer key, string value){
 
 Reduce(String key, liste de integer values){
   //key: price
-  //value: list of prices
+  //values: list of prices
   integer total = 0
   for each(v in values){
     total += v
@@ -58,7 +69,7 @@ Reduce(String key, liste de integer values){
 }
 ````
 
-###Question 2
+### Question 2
 Écrivez le programme map-reduce permettant de calculer le chiffre d'affaire généré
 pour chaque catégorie.
 
@@ -71,7 +82,7 @@ Map (Integer key, string value){
 
 Reduce(String key, liste de integer values){
   //key => categorie
-  //value => list of prices
+  //values => list of prices
   integer total = 0
   for each (v in values){
     total += v
@@ -80,7 +91,7 @@ Reduce(String key, liste de integer values){
 }
 ````
 
-###Question 3
+### Question 3
 Écrivez le programme map-reduce permettant de calculer le produit le plus vendu par
 catégorie.
 
@@ -94,7 +105,7 @@ Map (Integer key, string value){
 
 Reduce(String key, liste de string values){
   //key => categorie
-  //value => list de produits
+  //values => list de produits
   Hashmap products = {product,occur}
   Int max = 0
   String maxprod;
@@ -110,7 +121,7 @@ Reduce(String key, liste de string values){
 ````
 
 
-###Exercice 2 - Booble
+## Exercice 2 - Booble
 L'entreprise "Booble" , gestionnaire d'un moteur de recherche de pages web, souhaite
 effectuer des statistiques sur l'ensemble des requêtes des usagers. L'entreprise possède
 plusieurs serveurs dans le monde. À chaque nouvelle requête reçue, une ligne de log est
@@ -127,17 +138,17 @@ meilleure lisibilité.
 Ceci indique que le client 132.227.45.28 a fait une requête comportant les mots clés "musique" et
 "orientale" le 02/11/2012 à 12h 32min 10sec
 
-##Question 1
+### Question 1
 Écrivez le programme map-reduce permettant de calculer par tranche horaire d'une
 demi-heure d'une journée type le mot clé le plus recherché dans la tranche ainsi que
 le nombre total de requêtes reçues dans la tranche.
 Par exemple, voici le format d'un fichier de sortie
-entre 00h00 et 00h29 <Le mot le plus recherché dans cette tranche horaire> <le nombre total de requêtes reçues dans cette tranche horaire>
+_entre 00h00 et 00h29 <Le mot le plus recherché dans cette tranche horaire> <le nombre total de requêtes reçues dans cette tranche horaire>
 entre 00h30 et 00h59 <Le mot le plus recherché dans cette tranche horaire> <le nombre total de requêtes reçues dans cette tranche horaire>
 entre 01h00 et 01h29 <Le mot le plus recherché dans cette tranche horaire> <le nombre total de requêtes reçues dans cette tranche horaire>
 ...
 entre 23h00 et 23h29 <Le mot le plus recherché dans cette tranche horaire> <le nombre total de requêtes reçues dans cette tranche horaire>
-entre 23h30 et 23h59 <Le mot le plus recherché dans cette tranche horaire> <le nombre total de requêtes reçues dans cette tranche horaire>
+entre 23h30 et 23h59 <Le mot le plus recherché dans cette tranche horaire> <le nombre total de requêtes reçues dans cette tranche horaire>_
 
 
 ````Java
@@ -172,7 +183,7 @@ Reduce(String key, liste de string values){
 }
 ````
 
-##Question 2
+### Question 2
 Modifiez le programme précédent pour avoir ces mêmes informations mais classifiées
 par mois de l'année. Nous souhaitons un fichier de sortie par mois. Par exemple un
 fichier représentant le mois de février ne dois contenir que des informations sur les
@@ -215,7 +226,7 @@ IdReduce getPartition(<mois,tancheHoraire> key, list of string, entier nbReduce)
 }
 ````
 
-###Exercice 3 - Un cas réel d'utilisation : Last.fm
+## Exercice 3 - Un cas réel d'utilisation : Last.fm
 Last.fm est un site web de radio en ligne et de musique communautaire orant diérents
 services à ses utilisateurs comme par exemple l'écoute ou le téléchargement gratuit
 de musiques. Il existe plus de 25 millions d'utilisateurs qui utilisent Last.fm tous les mois
@@ -246,7 +257,7 @@ Pour ceci nous allons procéder en trois jobs MapReduce :
 parrallèle
   - le job 3 qui fusionnera les résultats des deux jobs précédents
 
-##Question 1
+### Question 1
 Écrivez le programme map-reduce du job 1. Dans le cas de l'exemple donné sa sortie
 devra être
 
@@ -255,3 +266,69 @@ TackId  | #listener
 222  | 1
 223  | 1
 225  | 2
+
+````Java
+Map (Integer key, string value){
+  //key => id of the line
+  //value => content of the line
+  //on calcul d'abord s'il y a eu au moins une écoute
+  Int listening = (LocalListening >= 1 || RadioListening >=1) ? 1 : 0
+  Emmit(TrackId, listening)
+}
+
+Reduce(String key, liste de int values){
+  //key =>tranche horaire
+  //values => si une personne a écouté ou non
+  Int total = 0
+  for each v in values{
+    total += v
+  }
+  Emmit(key,total)
+}
+````
+### Question 2
+Écrivez le programme map-reduce du job 2. Dans le cas de l'exemple donné sa sortie
+devra être :
+
+TrackId | #listening  | #skips
+--|---|--
+221  | 0 | 1
+222  | 1 | 0
+223  | 1 | 1
+225  | 5 | 0
+
+````Java
+Map (Integer key, string value){
+  //key => id of the line
+  //value => content of the line
+  //on calcul d'abord s'il y a eu au moins une écoute
+  Int listening = LocalListening + RadioListening
+  Emmit(TrackId, <listening,skip>)
+}
+
+Reduce(String key, liste de <int,int> values){
+  //key =>tranche horaire
+  //values => nombre d'écoutes
+  Int totalListen = 0
+  Int totalSkip = 0
+  for each v in values{
+    totalListen += v.listening
+    totalSkip += v.skip
+
+  }
+  Emmit(key,<totalListen,totalSkip>)
+}
+````
+
+### Question 3
+Écrivez le programme map-reduce du job 3. Dans le cas de l'exemple donné sa sortie
+devra être :
+
+TrackId | #listener | #listening  | #skips
+--|---|---|--
+221  | 0 | 0 | 1
+222  | 1 | 1 | 0
+223  | 1 | 1 | 1
+225  | 2 | 5 | 0
+
+````
