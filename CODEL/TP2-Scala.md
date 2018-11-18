@@ -8,9 +8,10 @@ bien utiliser le compilateur scala.
 ## Exercice 1 - C'est les soldes ! !
 ### Question 1
   Dans la classe Catalogue du TP1 sur sala, écrire une méthode qui réduit de x % tous les prix du catalogue. Vous ferez une version :
-    - avec une boucle for (appelée soldefor(percent:Int))
-    - avec l'appel à la méthode mapValues de la classe map avec un paramétrage d'une fonction nommée (appelée soldeFNomme(percent:Int)). La fonction nommée à passer en paramètre sera la suivante : `def diminution( a:Double ,percent:Int) : Double = a ∗ ((100.0 − percent)/100.0`
-    - avec l'appel à la méthode mapValues de la classe map avec un paramétrage d'une fonction anonyme (appelée soldeFAno(percent:Int)) 
+
+- avec une boucle for (appelée soldefor(percent:Int))
+- avec l'appel à la méthode mapValues de la classe map avec un paramétrage d'une fonction nommée (appelée soldeFNomme(percent:Int)). La fonction nommée à passer en paramètre sera la suivante : `def diminution( a:Double ,percent:Int) : Double = a ∗ ((100.0 −percent)/100.0`
+- avec l'appel à la méthode mapValues de la classe map avec un paramétrage d'une fonction anonyme (appelée soldeFAno(percent:Int)) 
    
 Le prototype de la méthode mapValues est le suivant : `def mapValues[C](f:(B)=>C):Map[A,C]`
 Elle produit une nouvelle map à partir de la map appelante en appliquant sur chaque valeur la fonction f.
