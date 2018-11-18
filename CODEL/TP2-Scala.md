@@ -8,19 +8,34 @@ bien utiliser le compilateur scala.
 ## Exercice 1 - C'est les soldes ! !
 ### Question 1
   Dans la classe Catalogue du TP1 sur sala, écrire une méthode qui réduit de x % tous les prix du catalogue. Vous ferez une version :
+  
     - avec une boucle for (appelée soldefor(percent:Int))
-    - avec l'appel à la méthode mapValues de la classe map avec un paramétrage d'une fonction nommée (appelée soldeFNomme(percent:Int)). La fonction nommée à
-passer en paramètre sera la suivante :
-`def diminution( a:Double ,percent:Int) : Double = a ∗ ((100.0 − percent)/100.0`
+    - avec l'appel à la méthode mapValues de la classe map avec un paramétrage d'une fonction nommée (appelée soldeFNomme(percent:Int)). La fonction nommée à passer en paramètre sera la suivante : `def diminution( a:Double ,percent:Int) : Double = a ∗ ((100.0 − percent)/100.0`
     - avec l'appel à la méthode mapValues de la classe map avec un paramétrage d'une fonction anonyme (appelée soldeFAno(percent:Int)) 
-    Le prototype de la méthode mapValues est le suivant :
-`def mapValues[C](f:(B)=>C):Map[A,C]`
-
+   
+Le prototype de la méthode mapValues est le suivant : `def mapValues[C](f:(B)=>C):Map[A,C]`
 Elle produit une nouvelle map à partir de la map appelante en appliquant sur chaque valeur la fonction f.
+
+````Scala
+ def soldefor(percent: Int) = {
+    for ((k, v) <- catal) catal += (k -> (v - v * percent / 100))
+  }
+
+  def diminution(a: Double, percent: Double) = a - (a * percent / 100)
+
+  def soldeFNomme(percent: Int) = {
+    catal = catal.mapValues(diminution(_: Double, percent))
+  }
+
+  def soldeFano(percent: Int) = {
+    var foo = (a: Double, p: Double) => (a - (a*p/100))
+    catal = catal.mapValues(foo(_:Double, percent))
+  }
+````
 
 ## Exercice 2 - Nombres premiers
 Le crible d'Ératosthène est une méthode qui permet de trouver tous les nombres premiers inférieurs à un certain entier naturel N donné. Pour rappel un nombre premier est un
-nombre entier qui n'est divisible que par 1 ou par lui-même. Exemples : 2 3 5 7 11 ....
+nombre entier qui n'est divisible que par 1 ou par lui-même. _Exemples : 2 3 5 7 11 ...._
 Le principe de l'algorithme est de procéder par élimination. Il s'agit de supprimer d'une liste triée des entiers de 2 à N tous les éléments qui sont multiples d'un entier inférieur.
 Ainsi il ne restera que les entiers qui ne sont multiples d'aucun entier, et qui sont donc les nombres premiers.
 
@@ -28,6 +43,19 @@ Ainsi il ne restera que les entiers qui ne sont multiples d'aucun entier, et qui
 Écrire la fonction premiers qui pour un entier n donné renvoie la liste des nombres premiers inférieurs ou égaux à n. L'idée de cette fonction est d'appliquer le crible
 d'Eratosthène en initialisant une liste d'entiers de 2 à n (utilisation de range) et d'appliquer successivement des filtres (méthode filter). Au filtre i il faudra enlever
 de la liste les nombres qui sont divisible par i.
+
+````Scala
+def premiers(n:Int):List[Int]={
+  var listRange:List[Int] = List.range[Int](2, n)
+  
+  for (i<-listRange){
+    listRange = listRange.filter(a => (a == i || a % i != 0))
+  }
+  listRange
+}
+
+premiers(25)
+````
 
 ### Question 2
 Écrire une autre version de la fonction premiers en utilisant une fonction imbriquée récursive dont l'algorithme est le suivant :
@@ -40,6 +68,23 @@ FONCTION f (liste entiers 1)
     //( l sans le 1er element et tous les elements non multiples du 1er element )
   FIN SI
 FIN FONCTION
+````
+````Scala
+def f(listn:List[Int]) :List[Int] = {
+    var result = List[Int]()
+    var tmpList:List[Int] = listn.sorted
+    
+    if ((listn.head*listn.head)  > listn.last){
+      return listn
+    }else{
+      result = result :+ listn.head //concat premier elem + list
+      tmpList = tmpList.drop(1) //sans le premier element
+      result = result ::: (f(tmpList.filter( a => (a == listn.head || a % listn.head != 0))))
+    }
+    result
+  }
+  
+  f(List.range[Int](2, 25))
 ````
 
 ## Exercice 3 - Letter Count
@@ -54,6 +99,16 @@ Il vous est interdit d'utiliser une boucle. Pour ceci il faut :
   2. transformer la liste de mots en remplaçant chaque mot par son nombre de lettres grâce à la méthode map
   3. faire la somme de chaque élément grâce à la méthode reduce
   
+````Scala
+def nbLetters(txt:List[String]):Int={
+  var words = txt.flatMap(_.split(" "))
+  var nbs = words.map((f:String)=>f.length())
+	nbs.reduce(_+_)
+}
+
+nbLetters(List( "Hadoop est une plateforme distribuee" , "Spark en est une autre" ,"scala est un langage" , "Java aussi" ))
+````
+  
 ## Exercice 4 - Moyenne
 ### Question 1
 Nous souhaitons écrire une fonction moyenne qui pour une liste de notes pondérées donnée calcule la moyenne de cette liste. Un élément d'une telle liste est un tuple de
@@ -63,9 +118,30 @@ de deux valeurs :
   - la deuxième valeur sera égale à la somme des coecients.
 Le résultat de la fonction sera la division entre ces deux valeurs. Il vous est interdit d'utiliser une boucle.
 
+````Scala
+def moyenne(notes:List[(Int,Int)]):Double={
+  var n = (notes.map((a) => a._1 * a._2)).reduce(_+_)
+  var c = (notes.map((a) => a._2)).reduce(_+_)
+  n/c
+}
+
+moyenne(List[(Int,Int)] = List((5,2),(6,1),(8,3),(2,2),(4,1)))
+````
+
 ## Exercice 5 - Fonction d'ordre supérieure
 ### Question 1
 Écrire la fonction suivante : `def isSorted[A](as: Array[A], ordered: (A,A) =>Boolean): Boolean` qui teste si un tableau est trié selon l'ordre passé en paramètre.
+
+````Scala
+def isSorted[A](as: Array[A], ordered: (A, A) => Boolean): Boolean = {
+  as.reduce((a, b) => {
+    if (!ordered(a, b))
+      return false
+    b
+  })
+  true
+}
+````
 
 ### Question 2
 Complétez le code suivant et faite en sorte qu'il fonctionne
@@ -85,6 +161,11 @@ assert(!isSorted(ar2.reverse,ascending))
 assert(!isSorted(ar2.reverse,descending))
 ````
 
+````Scala
+val ascending = (a:Int,b:Int) => if(a<b) true else false
+val descending = (a:Int,b:Int) => if(a<b) false else true
+````
+
 ## Exercice 6 - Des fonctions en folies !
 ### Question 1
 Donnez le code des fonction suivantes :
@@ -102,6 +183,12 @@ val f_decurr = decurryfie(f_curr)
 assert(p_curr(3)(4)==p_decurr(3,4))
 assert(f_curr(6)(7)==f_decurr(6,7))
 ````
+
+````Scala
+def curryfie[A,B,C](f: (A, B) =>C): A =>B =>C = (a:A) => (b:B) => f(a,b)
+def decurryfie[A,B,C](f: A =>B =>C):(A, B) =>C = (a:A,b:B) => f(a)(b)
+````
+
 
 ### Question 2
 Donnez le code de la fonction suivante :
