@@ -8,7 +8,6 @@ bien utiliser le compilateur scala.
 ## Exercice 1 - C'est les soldes ! !
 ### Question 1
   Dans la classe Catalogue du TP1 sur sala, écrire une méthode qui réduit de x % tous les prix du catalogue. Vous ferez une version :
-  
     - avec une boucle for (appelée soldefor(percent:Int))
     - avec l'appel à la méthode mapValues de la classe map avec un paramétrage d'une fonction nommée (appelée soldeFNomme(percent:Int)). La fonction nommée à passer en paramètre sera la suivante : `def diminution( a:Double ,percent:Int) : Double = a ∗ ((100.0 − percent)/100.0`
     - avec l'appel à la méthode mapValues de la classe map avec un paramétrage d'une fonction anonyme (appelée soldeFAno(percent:Int)) 
@@ -115,7 +114,7 @@ Nous souhaitons écrire une fonction moyenne qui pour une liste de notes pondér
 deux valeurs où le premier élément représente la note et le deuxième son coefficient respectif. Nous souhaitons utiliser les fonctions map et reduce qui calculeront un tuple
 de deux valeurs :
   - la première valeur sera égale à la somme pondérée des notes
-  - la deuxième valeur sera égale à la somme des coecients.
+  - la deuxième valeur sera égale à la somme des coefficients.
 Le résultat de la fonction sera la division entre ces deux valeurs. Il vous est interdit d'utiliser une boucle.
 
 ````Scala
