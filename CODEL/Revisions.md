@@ -123,6 +123,7 @@ NameNode**
   - Stocke des blocs de données dans le système de chier local
   - Serveur de bloc de données et de méta-données pour le client HDFS
   - Maintient des méta-données sur les blocs possédés (ex : CRC)
+ 
 
 ######  Communication avec le NameNode
 - Heartbeat :
@@ -143,6 +144,32 @@ Service de gestion de ressources de calcul distribuées
     - ⇒ Allocation/placement de containers sur les n÷uds esclaves
   - Une container = une abstraction de ressources de calcul :
     - ⇒ couple <nb processeurs, quantité mémoire>
+    
+Container Application Master(AM)
+  - container maitre de l'application
+  - négocie avec le RM l'allocation de containers esclaves
+
+Container YarnChild (YC)
+  - container esclave
+  - execute une tache de l'application
+  
+[Schéma slide 35 cours hadoop]
+  
+ FIFO Scheduler
+  - Les requêtes sont traitées dans l'ordre de leur arrivée (+ simple -partage cluster peu efficace)
+ Capacity Scheduler
+  - Plusieurs files d'attentes hiérarchiques avec une capacité max prédéfinie (+petite requêtes non pénalisées, - ttes ressources ne sont pas utilisées=
+ Faire Scheduler
+  -La capacité allouée à chaque client est la même (+alloc dynamique, pas d'attente, - capacité alloué à un job diminue avec la charge)
+  
+
+[schéma slide 43]
+
+### Hadoop MapReduce: spéculation
+  - Possibilité de démarrer de nouvelles instances de tâche en cours d'exécution
+  - décision d'un lancement d'une spéculation est faite par l'AppMaster
+  - Si la spéculation est jugée nécessaire, affectation d'une nouvelle instance de tâche dans un container
+  -> Permet d'anticiper les tâches jugées trop lentes donc potentiellement défaillantes
 
 ___________________________________
 # Spark
