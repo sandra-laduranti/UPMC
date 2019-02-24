@@ -1,0 +1,27 @@
+package integration_pkg
+public
+
+with hardware_pkg, software_pkg;
+
+system root_system
+end root_system;
+
+system implementation root_system.impl
+subcomponents
+  the_cpu: processor hardware_pkg::cpu.impl;
+  nav:   process   software_pkg::navigation.impl;
+  rad:   process   software_pkg::radar.impl;
+  log:   process   software_pkg::logging.impl;
+  dis:   process   software_pkg::display.impl;
+connections
+  cnx1: port rad.to_Nav -> nav.from_Rad;
+  cnx2: port nav.to_Dis -> dis.from_Nav;
+-- solution exercise 1
+--properties
+--  Actual_Processor_Binding => ( reference(the_cpu.vp_nav) ) applies to nav;
+--  Actual_Processor_Binding => ( reference(the_cpu.vp_rad) ) applies to rad;
+--  Actual_Processor_Binding => ( reference(the_cpu.vp_log) ) applies to log;
+--  Actual_Processor_Binding => ( reference(the_cpu.vp_dis) ) applies to dis;
+end root_system.impl;
+
+end integration_pkg;

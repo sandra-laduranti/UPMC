@@ -1,0 +1,47 @@
+package hardware_pkg
+public
+
+with ARINC653;
+
+processor cpu
+end cpu;
+
+processor implementation cpu.impl
+subcomponents
+  vp_nav: virtual processor vp_rms;
+  vp_rad: virtual processor vp_rms;
+  vp_log: virtual processor vp_rms;
+  vp_dis: virtual processor vp_rms;
+
+-- solution exercise 1
+properties		
+  Scheduling_Protocol => (ARINC653);
+  ARINC653::Module_Schedule => (
+    [ Partition => reference(vp_nav);
+      Duration => 5 ms;],
+    [ Partition => reference(vp_rad);
+      Duration => 10 ms;],
+    [ Partition => reference(vp_dis);
+      Duration => 15 ms;],
+    [ Partition => reference(vp_log);
+      Duration => 20 ms;],
+
+    [ Partition => reference(vp_rad);
+      Duration => 15 ms;],
+    [ Partition => reference(vp_nav);
+      Duration => 5 ms;],
+    [ Partition => reference(vp_dis);
+      Duration => 20 ms;],
+    [ Partition => reference(vp_log);
+      Duration => 10 ms;]
+  );
+
+  ARINC653::Module_Major_Frame => 100 ms;
+end cpu.impl;
+
+virtual processor vp_rms
+properties
+  Scheduling_Protocol => (RMS);
+end vp_rms;
+
+end hardware_pkg;

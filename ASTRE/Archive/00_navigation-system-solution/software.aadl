@@ -1,0 +1,197 @@
+package software_pkg
+public
+
+data position
+end position;
+
+data Int
+end Int;
+
+thread periodic_50
+properties
+  Dispatch_Protocol => Periodic;
+  Period => 50 ms;
+end periodic_50;
+
+thread implementation periodic_50.nav
+-- solution exercise 1
+annex behavior_specification {**
+  states
+    s1: initial complete final state;
+  transitions
+    s1 -[on dispatch]-> s1 {computation(3 ms)};
+**};
+end periodic_50.nav;
+
+thread periodic_100
+properties
+  Dispatch_Protocol => Periodic;
+  Period => 100 ms;
+end periodic_100;
+
+thread implementation periodic_100.rad
+-- solution exercise 1
+annex behavior_specification {**
+  states
+    s1: initial complete final state;
+  transitions
+    s1 -[on dispatch]-> s1 {computation(15 ms)};
+**};
+end periodic_100.rad;
+
+thread periodic_100_dis extends periodic_100
+features
+  pos_x: requires data access position;
+  pos_y: requires data access position;
+end periodic_100_dis;
+
+thread implementation periodic_100_dis.impl
+-- solution exercise 1
+annex behavior_specification {**
+  states
+    s1: initial complete final state;
+  transitions
+      s1 -[on dispatch]-> s1 {computation(21 ms)};
+  
+-- solution exercise 2
+--    s1 -[on dispatch]-> s1 {
+--                             computation(2 ms);
+--                             pos_x !<;
+--                             pos_y !<;
+--                             computation(5ms);
+--                             pos_x !>;
+--                             pos_y !>;
+--                             computation(10ms)
+--                           };
+**};
+end periodic_100_dis.impl;
+
+
+thread periodic_300
+properties
+  Dispatch_Protocol => Periodic;
+  Period => 300 ms;
+end periodic_300;
+
+
+thread implementation periodic_300.nav
+-- solution exercise 1
+annex behavior_specification {**
+  states
+    s1: initial complete final state;
+  transitions
+    s1 -[on dispatch]-> s1 {computation(10 ms)};
+**};
+end periodic_300.nav;
+
+thread implementation periodic_300.log
+-- solution exercise 1
+annex behavior_specification {**
+  states
+    s1: initial complete final state;
+  transitions
+    s1 -[on dispatch]-> s1 {computation(80 ms)};
+**};
+end periodic_300.log;
+
+thread periodic_300_dis extends periodic_300
+features
+  pos_x: requires data access position;
+  pos_y: requires data access position;
+end periodic_300_dis;
+
+thread implementation periodic_300_dis.impl
+-- solution exercise 1
+annex behavior_specification {**
+  states
+    s1: initial complete final state;
+  transitions
+      s1 -[on dispatch]-> s1 {
+      	computation(39 ms)
+      };
+      
+-- solution exercise 2
+--    s1 -[on dispatch]-> s1 {
+--                             computation(20 ms);
+--                             pos_y !<;
+--                             computation(4 ms);
+--                             pos_x !<;
+--                             computation(1 ms);
+--                             pos_y !>;
+--                             pos_x !>;
+--                             computation(10 ms)
+--                           };
+
+-- solution exercise 3
+--                             computation(10 ms);
+--                             pos_y !<;
+--                             pos_x !<;
+--                             computation(15 ms);
+--                             pos_y !>;
+--                             pos_x !>;
+--                             computation(10 ms)
+
+-- solution exercise 4
+--                             computation(10 ms);
+--                             pos_y !<;
+--                             pos_x !<;
+--                             computation(7 ms);
+--                             pos_y !>;
+--                             pos_x !>;
+--                             computation(3 ms)
+--                           };
+**};
+end periodic_300_dis.impl;
+
+process navigation
+features
+  from_Rad : in data port Int;
+  to_Dis   : out data port Int;
+end navigation;
+
+process implementation navigation.impl
+subcomponents
+  t_50  :  thread periodic_50.nav;
+  t_300 : thread periodic_300.nav;
+end navigation.impl;
+
+process radar
+features
+  to_Nav : out data port Int;
+end radar;
+
+process implementation radar.impl
+subcomponents
+  t_100 : thread periodic_100.rad;
+end radar.impl;
+
+process logging
+end logging;
+
+process implementation logging.impl
+subcomponents
+  t_300 : thread periodic_300.log;
+end logging.impl;
+
+process display
+features
+  from_Nav : in data port Int;
+end display;
+
+process implementation display.impl
+subcomponents
+  t_100  :  thread periodic_100_dis.impl;
+  t_300 : thread periodic_300_dis.impl;
+  pos_x   : data position;
+  pos_y   : data position;
+-- solution exercise 2 
+--  pos_x   : data position {Concurrency_Control_Protocol => PCP;} ;
+--  pos_y   : data position {Concurrency_Control_Protocol => PCP;} ;
+connections
+  cnx1: data access t_100.pos_x -> pos_x;
+  cnx2: data access t_300.pos_x -> pos_x;
+  cnx3: data access t_100.pos_y -> pos_y;
+  cnx4: data access t_300.pos_y -> pos_y;
+end display.impl;
+
+end software_pkg;

@@ -1,0 +1,71 @@
+Exam Astre
+
+1. Pire temps d'execution
+ void foo(bool large_block, int *b)
+{
+//BB0
+if (large_block) n=10; //BB1
+else n=5; //BB2
+while(n) { //BB3
+//BB4
+n--;
+}
+//BB5
+}
+
+
+1.1 cours
+Le WCET ou Worst Case Execution Time, en français pire cas de temps d’exécution,
+équivaut au plus long temps d’exécution d’un programme informatique.
+
+___________________________________wikipedia_______________________
+Calcul de WCET par graphe de flots (path based)
+Cette technique tente de borner le plus long chemin d’exécution dans le graphe de flot, et donc de déduire le WCET77. La pratique courante pour y arriver est de travailler sur des petits ensembles de chemins en utilisant l’algorithmique des graphes et considérant les WCET des nœuds connus individuellement. Les chemins infaisables n’ayant aucun intérêt dans la recherche du WCET puisque ne se réalisant jamais, elle va consister à les éliminer du graphe. La borne haute pour une tâche est déterminée en calculant les bornes pour les différents chemins de la tâche, et en cherchant le chemin global ayant le temps d’exécution le plus long. La caractéristique principale de cette technique est que les chemins possibles sont représentés explicitement. Cette approche est valable dans une itération de boucle unique, mais pose des problèmes avec des flots s’étendant à travers des boucles à plusieurs niveaux. Le nombre de chemin étant exponentiel par rapport au nombre de points de ramification, il faut alors utiliser des méthodes de recherche heuristique de chemin78. La technique est parfaitement illustrée dans la publication « Overview WCET »79.
+______________________________________________________________________
+
+______________________________cours (slide 30 slide pire temps exec)___________________________
+
+Safety => Une borne est sûre lorsqu'elle est plus grande que n'importe quel WCET réel observable
+Overestimation =>  L'imprécision dans l'analyse conduit à une surestimation
+From now on => WCET désigne le WCET bound (lié) WCET . . . WCET bound actual WCET . . . WCET
+
+
+Ce qui peut impacter le WCET:
+-> algorithme (programme source)
+-> data (entrées du programme)
+-> compiler (generateur code machine)
+-> Hardware
+    -> processeur pipeline
+    -> Unités de calcul
+    -> prédiction de branche
+    -> Cache
+    -> tampons
+    -> mémoire principale
+    -> arbitrage de bus
+-> taches systeme (preemption, competition, etc.)
+
+
+1.2 flot programme sous IPET  (pas sure reponse)
+Calcul de WCET par énumération implicite des chemins (IPET)
+
+(rien compris au cours mais les equations ressembleraient à: )
+
+e1 = e2 + e3
+e2 = e4
+e3 = e5
+e4 + e5 + e7 = e6
+e8 = e9
+
+normalement après il faut multiplier par le W(BBX) sauf que je sais pas comment on obtient cette valeur
+
+Maximize: W(BB0)e2 + W(BB0)e3 + W(BB1)e4 + W(BB2)e5 + W(BB3)e6 + W(BB4)e7 + W(BB4)e8 + W(BB5)e9
+
+1.3 Flot de programme avancé (pas sure réponse)
+
+e4 + e5 + e7 <= 10 (e4.e5) ==> boucle à 10 dans le pire des cas
+
+
+=======================================================================
+
+2. ARINC653
+2.1 communication inter partitions
