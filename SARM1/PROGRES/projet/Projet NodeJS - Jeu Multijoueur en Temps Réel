@@ -1,0 +1,94 @@
+Projet NodeJS - Jeu Multijoueur en Temps Réel
+
+réalisé par Damien Serin et Sandra Laduranti sous l'encadrement de Quentin Bramas.
+
+
+But du projet
+
+Celui-ci consiste à utiliser Node.js afin de créer un jeu multijoueur client/serveur en temps réel. 
+
+
+Structure et répartition du code.
+
+Le projet se divise en une partie serveur, une partie client et du code commun aux deux afin d'éviter au maximum la duplication de code.
+
+Nous avons choisi de travailler avec des classes afin d'améliorer la lisibilité du code, chaque objet principal dispose de sa propre classe, nous avons donc les classes suivantes:
+
+-game (classe principale gérant les executions internes du jeu)
+-map (classe disposant de la base du jeu -emplacement tiles, points de spawn- et des fonctions d'affichage sur la map)
+-player (classe définissant tous les attributs d'un joueur (pseudo, id, position, etat, etc.))
+-bullet (classe définissant tous les attributs des balles (id, position, dégats, etc.))
+-bonus (classe définissant tous les attributs des bonus appliqués au joueur ou aux balles (id, dommages, durée, etc.))
+
+Ces classes sont appuyées par les scripts généraux:
+
+-renderer (dispose des fonctions d'affichage générales hors de la map)
+-engine (dispose des fonctions de collision et de gestion d'input)
+
+Et enfin le tout est utilisé par les deux scripts principaux client et serveur.
+Le serveur ne gère que les sockets et communications ainsi que la boucle d'execution principale du jeu (avec appels vers la classe game), le client ne gère que l'affichage de son côté et la reception d'input.
+
+Librairies
+
+Nous avons choisi d'ajouter underscore à notre projet afin de faciliter les manipulations des nombreuses listes et tableaux qui le composent. 
+
+
+
+Implémentation côté Serveur:
+
+1. Implémentation générale
+
+Au lancement du serveur, toutes les classes uniques sont générées, notamment la classe game qui initialise tous les composantes de base du jeu, et la classe map qui récupère un config.json contenant le détail des placements des murs. Il est donc possible de modifier simplement la map en modifiant ce fichier directement avant lancement du serveur. 
+
+
+Les id des differents joueurs sont gérées via une variable globale s'incrémentant à chaque connexion. 
+
+Chaque client se connectant sur le serveur génère la création d'un objet player qui lui est immediatement emit via socket sous format JSON. Chaque joueur se voit également attribuer un avatar aléatoir dans une liste donnée.
+
+Le serveur reste à l'écoute du client en cas de changement de pseudo, input (touches clavier/souris) ou déconnexion. 
+
+Deux boucles sont executées sur des laps de temps donnés, la boucle de génération de nouveau bonus, afin de proposer un nouveau bonus sur la map toutes les 10secondes, et la boucle principale d'execution, qui se charge d'appeler la classe game, de charger tous les nouveaux changements puis de les broadcast à tous les joueurs.
+
+Une fois le nouvel état du jeu broadcast, elle se charge alors de nettoyer les fantomes dans les joueurs et les bonus.
+
+
+2. Zoom sur quelques fonctionnalités
+
+=> placement sur la map du joueur
+A l'initialisation il faut trouver un emplacement sur la map non pris par un autre joueur ou un mur. Afin d'éviter trop de boucles et d'optimiser un peu le code, nous avons choisi de définir de base une liste de points de spawn. Nous testons aleatoirement les différents points pour vérifier qu'il n'y aurait pas un autre joueur à cet endroit, si c'est le cas on recommence, sinon l'emplacement du nouveau joueur est trouvé!
+
+=> mise à jour de la position du joueur
+Le client envoie régulièrement les informations sur les mouvements via les input reçus dans le serveur. A chaque reception, l'état du joueur est modifié via deux variables de direction (x et y) en fonction des input pressés (UP_PRESSED, UP_RELEASED, etc.) La classe game a donc pour tâche de vérifier que la nouvelle position voulue (calculée via la direction et la vitesse du joueur) n'entre pas en collision avec un element du décors (mur ou bonus) ni un autre joueur. 
+
+=> mise à jour de la position des balles
+Les balles se déplacent selon des vecteurs de direction définis dans le client en fonction de l'emplacement du click les ayant généré, le déplacement est donc linéaire et ne prend pas en compte les changements du côté client. Cependant il faut tout de même vérifier les collisions avec le décors (génére une simple suppression de la balle) ou d'un autre joueur (voic ci-dessous)
+
+=> impact d'un joueur et d'une balle
+Si l'impact a lieu entre un joueur autre que le propriétaire de la balle, et cette dernière, il engendre une suite de manipulations, notamment l'incrémentation des points du propriétaire et la diminution de la vie du joueur touché (necessite un traitement supplémentaire en cas de bonus appliqués à la défense du joueur). Dans le cas où la vie du joueur touché tomberait à zero une fois les dommages appliqués (une balle peut faire différents dommages en fonction des bonus de propriétaire lors de son lancement), le joueur passe en statut: "dead". La mort est gérée par la suppression du joueur de la liste des joueurs, après l'avoir informé de son état via le broadcast de la boucle principale. Il ne peut donc plus interagir avec le jeu.
+Les highscores sont calculés au moment de la mort d'un joueur dans la limite de 20 highscores.
+
+=> gestion des bonus
+Des bonus sont lancés de manière aléatoire sur la map, via un fichier de configuration décrivant tous leurs effets. Ils sont séparés en 3 catégories:
+
+*Shield -> augmente la défense du joueur en lui accordant 100 points de vie supplémentaires pendant un laps de temps défini
+
+*BulletBonus => liste bonus s'appliquant directement aux balles
+. MasterBullet -> ajoute 2 points supplémentaires aux dommages de base des balles et accorde 2 points supplémentaires à son proprietaire
+. GodOfBullet -> ajoute 4 points supplémentaires aux dommages de base des balles et accorde 4 points supplémentaires à son proprietaire
+. MalusDammage -> retire 1 point aux dommages de base des balles 
+
+*PlayerBonus => liste bonus s'appliquant directement aux stats du joueur
+. BonusSpeed -> incrémente de 0.2 points la vitesse du joueur pendant un laps de temps défini
+. MalusSpeed -> décrémente de 0.2 points la vitesse du joueur pendant un laps de temps défini
+
+
+Les bonus des balles sont appliqués directement lors de leur création dans le cas où le bonus du joueur est encore actif au lancement de la balle. Les bonus de joueur sont appliqués à chaque mouvement du joueur via une verification des bonus actifs avant tout mouvement. Le bonus shield est lui géré à chaque impacte de balle. On décrémente le compteur de l'objet bonus en priorité, et si celui-ci tombe à zero, le reste des dommages est pris directement par le joueur.
+
+Tous les bonus ont un temps de vie limité géré par des timestamp (un pour l'apparition sur la map, un pour le moment d'activation par le joueur) qui sont vérifiés par la boucle principale et supprimés dès qu'ils atteignent leur durée de vie.
+
+Les bonus non récupérés sur la map et les bonus récupérés par des joueurs sont gérés indépendemment via verification d'un id player sur le bonus (si ce n'est pas le cas, il n'a pas été récupéré et est donc supprimé directement de la liste des bonus).
+
+
+
+
+
